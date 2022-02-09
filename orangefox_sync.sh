@@ -249,12 +249,12 @@ clone_common() {
 
    if [ ! -d "device/qcom/common" ]; then
    	echo "-- Cloning qcom common ...";
-	git clone https://github.com/TeamWin/android_device_qcom_common -b $DEVICE_BRANCH device/qcom/common;
+	git clone --depth 1 https://github.com/TeamWin/android_device_qcom_common -b $DEVICE_BRANCH device/qcom/common;
    fi
 
    if [ ! -d "device/qcom/twrp-common" ]; then
    	echo "-- Cloning twrp-common ...";
-   	git clone https://github.com/TeamWin/android_device_qcom_twrp-common -b $DEVICE_BRANCH device/qcom/twrp-common;
+   	git clone --depth 1 https://github.com/TeamWin/android_device_qcom_twrp-common -b $DEVICE_BRANCH device/qcom/twrp-common;
    fi
 }
 
@@ -282,7 +282,7 @@ local BRANCH=$FOX_BRANCH;
    }
 
    echo "-- Pulling the OrangeFox recovery sources ...";
-   git clone --recurse-submodules $URL -b $BRANCH recovery;
+   git clone --recurse-submodules $URL -b $BRANCH recovery --depth 1;
    [ "$?" = "0" ] && echo "-- The OrangeFox sources have been cloned successfully" || echo "-- Failed to clone the OrangeFox sources!";
 
    # check that the themes are correctly downloaded
@@ -294,7 +294,7 @@ local BRANCH=$FOX_BRANCH;
       	   URL="git@gitlab.com:OrangeFox/misc/theme.git";
    	fi
       	[ -d recovery/gui/theme ] && rm -rf recovery/gui/theme;
-      	git clone $URL recovery/gui/theme;
+      	git clone $URL recovery/gui/theme --depth 1;
       	[ "$?" = "0" ] && echo "-- The themes have been cloned successfully" || echo "-- Failed to clone the themes!";
    fi
 
@@ -328,7 +328,7 @@ local BRANCH=$FOX_BRANCH;
 
    cd $MANIFEST_DIR/vendor;
    echo "-- Pulling the OrangeFox vendor tree ...";
-   git clone $URL -b $BRANCH recovery;
+   git clone $URL -b $BRANCH recovery --depth 1;
    [ "$?" = "0" ] && echo "-- The OrangeFox vendor tree has been cloned successfully" || echo "-- Failed to clone the OrangeFox vendor tree!";
 }
 
@@ -347,7 +347,7 @@ local BRANCH="android-9.0";
    echo "-- Preparing for cloning the OrangeFox busybox sources ...";
    cd $MANIFEST_DIR/external;
    echo "-- Pulling the OrangeFox busybox sources ...";
-   git clone $URL -b $BRANCH busybox;
+   git clone $URL -b $BRANCH busybox --depth 1;
    [ "$?" = "0" ] && echo "-- The OrangeFox busybox sources have been cloned successfully" || echo "-- Failed to clone the OrangeFox busybox sources!";
 }
 
@@ -364,7 +364,7 @@ local DIR=$MANIFEST_DIR/device/xiaomi;
    local URL=git@gitlab.com:OrangeFox/device/"$test_build_device".git;
    [ "$USE_SSH" = "0" ] && URL=https://gitlab.com/OrangeFox/device/"$test_build_device".git;
    echo "-- Pulling the $test_build_device device tree ...";
-   git clone $URL -b "$FOX_DEF_BRANCH" "$test_build_device";
+   git clone $URL -b "$FOX_DEF_BRANCH" "$test_build_device" --depth 1;
 
    # done
    if [ -d "$test_build_device" -a -d "$test_build_device/recovery" ]; then
